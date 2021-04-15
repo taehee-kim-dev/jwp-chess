@@ -2,6 +2,7 @@ package chess.controller.web;
 
 
 import chess.controller.dto.request.MoveRequestDTO;
+import chess.controller.dto.request.RoomCreateRequestDTO;
 import chess.controller.dto.response.BoardResponseDTO;
 import chess.controller.dto.response.ChessGameResponseDTO;
 import chess.controller.dto.response.MoveResponseDTO;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,8 +46,9 @@ public class WebController {
     }
 
     @PostMapping(ROOT + CREATE_CHESS_ROOM)
-    public String createChessRoomRequest(@RequestParam("room-title") String roomTitle) throws SQLException {
-        Long createdChessGameId = chessWebService.createNewChessGame(roomTitle);
+    public String createChessRoomRequest(@ModelAttribute RoomCreateRequestDTO roomCreateRequestDTO) throws SQLException {
+        System.out.println(roomCreateRequestDTO);
+        Long createdChessGameId = chessWebService.createNewChessGame(roomCreateRequestDTO);
         return "redirect:" + ROOT + CHESS_BOARD + "?id=" + createdChessGameId;
     }
 

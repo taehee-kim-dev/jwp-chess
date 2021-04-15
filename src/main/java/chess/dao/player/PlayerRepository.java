@@ -8,6 +8,10 @@ import org.springframework.stereotype.Repository;
 public interface PlayerRepository {
     void save(TeamColor[] teamColors, Long gameId) throws SQLException;
 
+    void savePlayerPassword(Long playerId, String encryptedPassword);
+
+    String findPasswordByGameIdIdAndTeamColor(Long gameId, TeamColor teamColor);
+
     Long findIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor) throws SQLException;
 
     void removeAllByChessGame(Long gameId) throws SQLException;

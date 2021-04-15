@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.controller.dto.request.MoveRequestDTO;
+import chess.controller.dto.request.RoomCreateRequestDTO;
 import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.controller.dto.response.ChessGameResponseDTO;
 import chess.controller.dto.response.GameStatusResponseDTO;
@@ -14,6 +15,7 @@ import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.board.setting.BoardSetting;
 import chess.domain.player.score.Scores;
 import chess.domain.player.type.TeamColor;
+import chess.service.dto.request.PlayerPasswordSaveRequestDTO;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,5 +84,9 @@ public class ChessGame {
     public void remove(Long gameId) throws SQLException {
         board.removeAllPlayersAndPiecesPositionsOfGame(gameId);
         chessGameRepository.remove(gameId);
+    }
+
+    public void savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
+        board.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
     }
 }

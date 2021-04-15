@@ -3,6 +3,7 @@ package chess.domain.player;
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 
+import chess.controller.dto.request.RoomCreateRequestDTO;
 import chess.dao.entity.GamePiecePositionEntity;
 import chess.dao.entity.PiecePositionEntity;
 import chess.domain.board.Cell;
@@ -14,6 +15,7 @@ import chess.domain.position.PiecePosition;
 import chess.domain.position.PiecesPositions;
 import chess.domain.position.Position;
 import chess.domain.position.cache.PositionsCache;
+import chess.service.dto.request.PlayerPasswordSaveRequestDTO;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -101,5 +103,9 @@ public class PlayersPieces {
 
     public List<String> getCellsStatusByGameIdInOrderAsString(Long gameId) throws SQLException {
         return piecesPositions.getCellsStatusByGameIdInOrderAsString(gameId);
+    }
+
+    public void savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
+        players.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
     }
 }

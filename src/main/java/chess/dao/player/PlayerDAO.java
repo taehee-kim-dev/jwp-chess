@@ -22,6 +22,21 @@ public class PlayerDAO implements PlayerRepository {
     }
 
     @Override
+    public void savePlayerPassword(Long playerId, String encryptedPassword) {
+        String query = "UPDATE player SET password = ? WHERE id = ?";
+        jdbcTemplate.update(query, encryptedPassword, playerId);
+    }
+
+    @Override
+    public String findPasswordByGameIdIdAndTeamColor(Long gameId, TeamColor teamColor) {
+        String query = "SELECT password FROM player WHERE chess_game_id = ? AND team_color = ?";
+        return jdbcTemplate.queryForObject(
+            query,
+            String.class,
+            gameId, teamColor.getValue());
+    }
+
+    @Override
     public Long findIdByGameIdAndTeamColor(Long gameId, TeamColor teamColor) {
         String query = "SELECT id FROM player WHERE chess_game_id = ? AND team_color = ?";
         try {

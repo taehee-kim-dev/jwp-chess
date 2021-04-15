@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.controller.dto.request.MoveRequestDTO;
+import chess.controller.dto.request.RoomCreateRequestDTO;
 import chess.controller.dto.response.BoardResponseDTO;
 import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.controller.dto.response.ChessGameResponseDTO;
@@ -9,6 +10,7 @@ import chess.controller.dto.response.MoveResponseDTO;
 import chess.controller.dto.response.ResponseDTO;
 import chess.domain.board.setting.BoardSetting;
 import chess.domain.game.ChessGame;
+import chess.service.dto.request.PlayerPasswordSaveRequestDTO;
 import java.sql.SQLException;
 import java.util.List;
 import org.springframework.context.annotation.Profile;
@@ -36,8 +38,12 @@ public class ChessWebService {
         this.boardSetting = boardSetting;
     }
 
-    public Long createNewChessGame(String title) throws SQLException {
-        return chessGame.createNew(boardSetting, title);
+    public Long createNewChessGame(RoomCreateRequestDTO roomCreateRequestDTO) throws SQLException {
+        Long gameId = chessGame.createNew(boardSetting, roomCreateRequestDTO.getRoomTitle());
+        PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO
+            = new PlayerPasswordSaveRequestDTO(roomCreateRequestDTO.getWhitePlayerPassword(), true);
+        chessGame.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
+        return gameId;
     }
 
     public List<ChessGameResponseDTO> getAllRoomsIdAndTitle() throws SQLException {

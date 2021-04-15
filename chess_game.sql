@@ -4,10 +4,9 @@ grant all privileges on *.* to 'inbi'@'localhost';
 
 flush privileges;
 
-CREATE DATABASE chess_game_sample DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE chess_game DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-use chess_game_sample;
-
+use chess_game;
 
 -- MySQL Workbench Forward Engineering
 
@@ -25,13 +24,13 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema chess_game
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `chess_game_sample` DEFAULT CHARACTER SET utf8 ;
-USE `chess_game_sample` ;
+CREATE SCHEMA IF NOT EXISTS `chess_game` DEFAULT CHARACTER SET utf8 ;
+USE `chess_game` ;
 
 -- -----------------------------------------------------
 -- Table `chess_game`.`chess_game`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `chess_game_sample`.`chess_game` (
+CREATE TABLE IF NOT EXISTS `chess_game`.`chess_game` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(255) NOT NULL DEFAULT '제목 없는 방',
   `current_turn_team_color` VARCHAR(255) NOT NULL,
@@ -44,7 +43,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `chess_game`.`piece`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `chess_game_sample`.`piece` (
+CREATE TABLE IF NOT EXISTS `chess_game`.`piece` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `color` VARCHAR(255) NOT NULL,
@@ -57,10 +56,10 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `chess_game`.`player`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `chess_game_sample`.`player` (
+CREATE TABLE IF NOT EXISTS `chess_game`.`player` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `team_color` VARCHAR(255) NOT NULL,
-  `password` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NULL,
   `chess_game_id` BIGINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`, `chess_game_id`),
   INDEX `fk_player_chess_game1_idx` (`chess_game_id` ASC) VISIBLE,
@@ -75,7 +74,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `chess_game`.`position`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `chess_game_sample`.`position` (
+CREATE TABLE IF NOT EXISTS `chess_game`.`position` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `file_value` VARCHAR(255) NOT NULL,
   `rank_value` VARCHAR(255) NOT NULL,
@@ -88,7 +87,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `chess_game`.`player_piece_position`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `chess_game_sample`.`player_piece_position` (
+CREATE TABLE IF NOT EXISTS `chess_game`.`player_piece_position` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `player_id` BIGINT UNSIGNED NOT NULL,
   `piece_id` BIGINT UNSIGNED NOT NULL,
@@ -114,7 +113,6 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 
 -- ----------------------------------------------------
 -- queries
@@ -214,3 +212,4 @@ INSERT INTO piece (name, color) VALUES ('BISHOP', 'black');
 INSERT INTO piece (name, color) VALUES ('KNIGHT', 'black');
 INSERT INTO piece (name, color) VALUES ('QUEEN', 'black');
 INSERT INTO piece (name, color) VALUES ('KING', 'black');
+

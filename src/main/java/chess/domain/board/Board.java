@@ -13,6 +13,7 @@ import chess.domain.player.PlayersPieces;
 import chess.domain.player.score.Scores;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.Position;
+import chess.service.dto.request.PlayerPasswordSaveRequestDTO;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +86,10 @@ public class Board {
 
     public void removeAllPlayersAndPiecesPositionsOfGame(Long gameId) throws SQLException {
         playersPieces.removeAllPlayersAndPiecesPositions(gameId);
+    }
+
+    public void savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
+        playersPieces.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
     }
 }
 
