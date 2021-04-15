@@ -3,6 +3,7 @@ package chess.domain.player;
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.dao.entity.PiecePositionEntity;
 import chess.dao.player.PlayerRepository;
 import chess.domain.board.move.MoveRequest;
@@ -52,8 +53,9 @@ public class Players {
         return encryptedPassword;
     }
 
-    public void validateEncryptedPassword(Long gameId, MoveRequest moveRequest) {
-        String expectedEncryptedPassword = playerRepository.findPasswordByGameIdIdAndTeamColor(gameId, moveRequest.getCurrentTurnTeamColor());
+    public void validateEncryptedPassword(MoveRequest moveRequest) {
+        String expectedEncryptedPassword
+            = playerRepository.findPasswordByGameIdIdAndTeamColor(moveRequest.getGameId(), moveRequest.getCurrentTurnTeamColor());
         if (expectedEncryptedPassword == null || !expectedEncryptedPassword.equals(moveRequest.getEncryptedPassword())) {
             throw new IllegalArgumentException("쿠키로 전달된  encryptedPassword 값이 일치하지 않습니다.");
         }

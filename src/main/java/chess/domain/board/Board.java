@@ -4,6 +4,7 @@ import static chess.domain.piece.type.PieceType.KING;
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.dao.entity.GamePiecePositionEntity;
 import chess.domain.board.move.MoveChecker;
@@ -40,7 +41,6 @@ public class Board {
     public void validateRoute(Long gameId, MoveRequest moveRequest) throws SQLException {
         Map<Position, Cell> cells = playersPieces.getAllCellsByGameId(gameId);
         Cell startPositionCell = cells.get(moveRequest.getStartPosition());
-        playersPieces.validateEncryptedPassword(gameId, moveRequest);
         validateOwnPiece(startPositionCell, moveRequest.getCurrentTurnTeamColor());
         validateMoveRoute(cells, moveRequest);
     }
@@ -91,6 +91,10 @@ public class Board {
 
     public String savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
         return playersPieces.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
+    }
+
+    public void validateEncryptedPassword(MoveRequest moveRequest) {
+        playersPieces.validateEncryptedPassword(moveRequest);
     }
 }
 

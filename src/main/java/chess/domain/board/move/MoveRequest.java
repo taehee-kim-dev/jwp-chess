@@ -6,16 +6,22 @@ import chess.domain.player.type.TeamColor;
 import chess.domain.position.Position;
 
 public class MoveRequest {
+    private final Long gameId;
     private final TeamColor currentTurnTeamColor;
     private final Position startPosition;
     private final Position destination;
     private String encryptedPassword;
 
     public MoveRequest(TeamColor currentTurnTeamColor, MoveRequestDTO moveRequestDTO) {
+        this.gameId = moveRequestDTO.getGameId();
         this.currentTurnTeamColor = currentTurnTeamColor;
         startPosition = Position.of(moveRequestDTO.getStartPosition());
         destination = Position.of(moveRequestDTO.getDestination());
         encryptedPassword = moveRequestDTO.getEncryptedPassword();
+    }
+
+    public Long getGameId() {
+        return gameId;
     }
 
     public TeamColor getCurrentTurnTeamColor() {

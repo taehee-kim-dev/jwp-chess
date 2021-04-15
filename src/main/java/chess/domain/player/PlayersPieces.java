@@ -3,6 +3,7 @@ package chess.domain.player;
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.request.RoomCreateRequestDTO;
 import chess.dao.entity.GamePiecePositionEntity;
 import chess.dao.entity.PiecePositionEntity;
@@ -110,7 +111,7 @@ public class PlayersPieces {
         return players.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
     }
 
-    public void validateEncryptedPassword(Long gameId, MoveRequest moveRequest) {
-        players.validateEncryptedPassword(gameId, moveRequest);
+    public void validateEncryptedPassword(MoveRequest moveRequest) {
+        players.validateEncryptedPassword(moveRequest);
     }
 }

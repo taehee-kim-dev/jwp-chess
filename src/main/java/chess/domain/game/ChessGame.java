@@ -88,4 +88,10 @@ public class ChessGame {
     public String savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
         return board.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
     }
+
+    public void validateEncryptedPassword(MoveRequestDTO moveRequestDTO) throws SQLException {
+        ChessGameEntity chessGameEntity = chessGameRepository.findById(moveRequestDTO.getGameId());
+        MoveRequest moveRequest = new MoveRequest(chessGameEntity.getCurrentTurnTeamColor(), moveRequestDTO);
+        board.validateEncryptedPassword(moveRequest);
+    }
 }

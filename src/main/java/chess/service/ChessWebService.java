@@ -58,6 +58,7 @@ public class ChessWebService {
 
     private MoveResponseDTO createMoveResponse(MoveRequestDTO moveRequestDTO) throws SQLException {
         try {
+            chessGame.validateEncryptedPassword(moveRequestDTO);
             chessGame.move(moveRequestDTO);
         } catch (Exception e) {
             return new MoveResponseDTO(true, e.getMessage());
