@@ -8,8 +8,11 @@ import chess.controller.dto.response.ChessGameResponseDTO;
 import chess.controller.dto.response.MoveResponseDTO;
 import chess.controller.dto.response.ResponseDTO;
 import chess.service.ChessWebService;
+import chess.service.dto.response.CreateChessGameResponseDTO;
 import java.sql.SQLException;
 import java.util.List;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,10 +49,12 @@ public class WebController {
     }
 
     @PostMapping(ROOT + CREATE_CHESS_ROOM)
-    public String createChessRoomRequest(@ModelAttribute RoomCreateRequestDTO roomCreateRequestDTO) throws SQLException {
+    public String createChessRoomRequest(@ModelAttribute RoomCreateRequestDTO roomCreateRequestDTO, HttpServletResponse response) throws SQLException {
         System.out.println(roomCreateRequestDTO);
-        Long createdChessGameId = chessWebService.createNewChessGame(roomCreateRequestDTO);
-        return "redirect:" + ROOT + CHESS_BOARD + "?id=" + createdChessGameId;
+        CreateChessGameResponseDTO createChessGameResponseDTO = chessWebService.createNewChessGame(roomCreateRequestDTO);
+        Cookie cookie = new Cookie("password", createChessGameResponseDTO.getPassword());
+        response.addCookie(cookie);
+        return "redirect:" + ROOT + CHESS_BOARD + "?id=" + createChessGameResponseDTO.getGameId();
     }
 
     @GetMapping(ROOT + CHESS_BOARD)

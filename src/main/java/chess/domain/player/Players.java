@@ -39,14 +39,15 @@ public class Players {
         return scoreCalculator.getCalculatedScore(piecePositionEntities);
     }
 
-    public void savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
+    public String savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
         String encryptedPassword = PasswordEncoder.encrypt(playerPasswordSaveRequestDTO.getPassword());
         if (playerPasswordSaveRequestDTO.isWhitePlayer()) {
             Long playerId = playerRepository.findIdByGameIdAndTeamColor(gameId, WHITE);
             playerRepository.savePlayerPassword(playerId, encryptedPassword);
-            return;
+            return encryptedPassword;
         }
         Long playerId = playerRepository.findIdByGameIdAndTeamColor(gameId, BLACK);
-        playerRepository.savePlayerPassword(gameId, encryptedPassword);
+        playerRepository.savePlayerPassword(playerId, encryptedPassword);
+        return encryptedPassword;
     }
 }

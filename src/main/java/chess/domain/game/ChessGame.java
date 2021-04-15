@@ -86,7 +86,7 @@ public class ChessGame {
         chessGameRepository.remove(gameId);
     }
 
-    public void savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
-        board.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
+    public String savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
+        return board.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
     }
 }

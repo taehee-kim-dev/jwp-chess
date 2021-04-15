@@ -88,8 +88,8 @@ public class Board {
         playersPieces.removeAllPlayersAndPiecesPositions(gameId);
     }
 
-    public void savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
-        playersPieces.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
+    public String savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
+        return playersPieces.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
     }
 }
 

@@ -105,7 +105,7 @@ public class PlayersPieces {
         return piecesPositions.getCellsStatusByGameIdInOrderAsString(gameId);
     }
 
-    public void savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
-        players.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
+    public String savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
+        return players.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
     }
 }
