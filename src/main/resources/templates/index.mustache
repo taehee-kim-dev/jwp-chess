@@ -18,7 +18,6 @@
   {{#allChessGameRooms}}
   <li id="{{id}}" class="list-group-item" style="display: flex">
     <button type="button" class="btn btn-light enter-room-button" style="width: 100%">{{title}}</button>
-    <button type="button" class="btn btn-danger delete-room-button">삭제</button>
   </li>
   {{/allChessGameRooms}}
 </ul>
@@ -40,6 +39,36 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
-<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
+  const HOME = 'http://localhost:8080';
+
+  const enter_room_buttons =  document.getElementsByClassName("enter-room-button");
+
+  for (let i = 0; i < enter_room_buttons.length; i++) {
+    enter_room_buttons[i].addEventListener('click', (event) => {
+      window.location.href = HOME + '/rooms?id=' + event.target.parentElement.id;
+    });
+  }
+
+  function create_room_check() {
+    const room_title_min_size = 5;
+
+    const new_room_title = document.getElementById('new_room_title');
+    if(new_room_title.value.length < room_title_min_size) {
+      alert('방 제목은 ' + room_title_min_size + '글자 이상이어야 합니다.');
+      new_room_title.focus();
+      return false;
+    }
+
+    const white_player_password = document.getElementById('white-player-password');
+    if(white_player_password.value.length < room_title_min_size) {
+      alert('비밀번호는 ' + room_title_min_size + '자 이상이어야 합니다.');
+      white_player_password.focus();
+      return false;
+    }
+
+    return true;
+  }
+</script>
 </body>
 </html>
