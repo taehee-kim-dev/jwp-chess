@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import chess.controller.dto.request.MoveRequestDTO;
-import chess.controller.dto.request.RoomCreateRequestDTO;
 import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.controller.dto.response.ChessGameResponseDTO;
 import chess.controller.dto.response.GameStatusResponseDTO;
@@ -44,9 +43,9 @@ public class ChessGame {
         }
     }
 
-    public List<ChessGameResponseDTO> getAllGamesIdAndTitle() throws SQLException {
+    public List<ChessGameResponseDTO> getNotFullGamesIdAndTitle() throws SQLException {
         List<ChessGameResponseDTO> chessGameResponseDTOs = new ArrayList<>();
-        for (ChessGameEntity chessGameEntity : chessGameRepository.findAll()) {
+        for (ChessGameEntity chessGameEntity : chessGameRepository.findNotFullGames()) {
             chessGameResponseDTOs.add(new ChessGameResponseDTO(chessGameEntity.getId(), chessGameEntity.getTitle()));
         }
         return chessGameResponseDTOs;

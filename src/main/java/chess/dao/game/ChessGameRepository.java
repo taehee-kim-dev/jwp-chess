@@ -12,7 +12,7 @@ public interface ChessGameRepository {
 
     ChessGameEntity findById(Long id) throws SQLException;
 
-    List<ChessGameEntity> findAll() throws SQLException;
+    List<ChessGameEntity> findNotFullGames();
 
     GameStatusEntity findStatusByGameId(Long gameId) throws SQLException;
 

@@ -15,11 +15,11 @@
 <h1 class="display-4 text-center" style="margin-top: 80px;margin-bottom: 40px;">인비의 체스 게임</h1>
 
 <ul class="list-group text-center" style="width: 400px; margin-left: auto; margin-right: auto">
-  {{#allChessGameRooms}}
+  {{#notFullGamesIdAndTitle}}
   <li id="{{id}}" class="list-group-item" style="display: flex">
     <button type="button" class="btn btn-light enter-room-button" style="width: 100%">{{title}}</button>
   </li>
-  {{/allChessGameRooms}}
+  {{/notFullGamesIdAndTitle}}
 </ul>
 
 <form action="/rooms" method="post" style="width: 260px; margin-top: 40px; margin-left: auto; margin-right: auto" onsubmit="return create_room_check();">

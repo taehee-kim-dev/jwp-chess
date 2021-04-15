@@ -47,8 +47,8 @@ public class ChessWebService {
         return new CreateChessGameResponseDTO(gameId, password);
     }
 
-    public List<ChessGameResponseDTO> getAllRoomsIdAndTitle() throws SQLException {
-        return chessGame.getAllGamesIdAndTitle();
+    public List<ChessGameResponseDTO> getNotFullGamesIdAndTitle() throws SQLException {
+        return chessGame.getNotFullGamesIdAndTitle();
     }
 
     public MoveResponseDTO requestMove(MoveRequestDTO moveRequestDTO) throws SQLException {

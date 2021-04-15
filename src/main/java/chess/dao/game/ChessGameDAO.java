@@ -47,8 +47,11 @@ public class ChessGameDAO implements ChessGameRepository {
     }
 
     @Override
-    public List<ChessGameEntity> findAll() {
-        String query = "SELECT * FROM chess_game";
+    public List<ChessGameEntity> findNotFullGames() {
+        String query = "SELECT * FROM chess_game "
+            + "INNER JOIN "
+            + "(SELECT * FROM player WHERE password is NULL) AS player_not_joined "
+            + "ON chess_game.id = player_not_joined.chess_game_id";
         return jdbcTemplate.query(query, ChessGameEntityRowMapper);
     }
 

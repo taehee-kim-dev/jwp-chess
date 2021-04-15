@@ -43,8 +43,8 @@ public class WebController {
 
     @GetMapping(ROOT)
     public String home(Model model) throws SQLException {
-        List<ChessGameResponseDTO> allRoomsIdAndTitle = chessWebService.getAllRoomsIdAndTitle();
-        model.addAttribute("allChessGameRooms", allRoomsIdAndTitle);
+        List<ChessGameResponseDTO> notFullGamesIdAndTitle = chessWebService.getNotFullGamesIdAndTitle();
+        model.addAttribute("notFullGamesIdAndTitle", notFullGamesIdAndTitle);
         return HOME_VIEW;
     }
 
