@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.controller.dto.request.JoinChessRoomRequestDTO;
 import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.request.RoomCreateRequestDTO;
 import chess.controller.dto.response.BoardResponseDTO;
@@ -88,5 +89,11 @@ public class ChessWebService {
 
     public void deleteGame(Long gameId) throws SQLException {
         chessGame.remove(gameId);
+    }
+
+    public String joinGame(JoinChessRoomRequestDTO joinChessRoomRequestDTO) throws SQLException {
+        PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO
+            = new PlayerPasswordSaveRequestDTO(joinChessRoomRequestDTO.getBlackPlayerPassword(), false);
+        return chessGame.savePlayerPassword(joinChessRoomRequestDTO.getGameId(), playerPasswordSaveRequestDTO);
     }
 }

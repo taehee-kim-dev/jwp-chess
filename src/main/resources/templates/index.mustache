@@ -46,7 +46,23 @@
 
   for (let i = 0; i < enter_room_buttons.length; i++) {
     enter_room_buttons[i].addEventListener('click', (event) => {
-      window.location.href = HOME + '/rooms?id=' + event.target.parentElement.id;
+      const black_player_password = prompt("비밀번호를 입력하세요.");
+      if (black_player_password.length < 5) {
+        alert('비밀번호는 5자 이상이어야 합니다.');
+        return;
+      }
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/join', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.responseType = 'json';
+      xhr.send(JSON.stringify({
+        gameId : event.target.parentElement.id,
+        blackPlayerPassword : black_player_password
+      }));
+      xhr.onload = function () {
+        window.location.href = HOME + '/rooms?id=' + event.target.parentElement.id;
+      };
     });
   }
 

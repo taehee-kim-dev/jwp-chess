@@ -2,18 +2,18 @@ package chess.service.dto.response;
 
 public class CreateChessGameResponseDTO {
     private final Long gameId;
-    private final String password;
+    private final String encryptedPassword;
 
-    public CreateChessGameResponseDTO(Long gameId, String password) {
+    public CreateChessGameResponseDTO(Long gameId, String encryptedPassword) {
         this.gameId = gameId;
-        this.password = password;
+        this.encryptedPassword = encryptedPassword;
     }
 
     public Long getGameId() {
         return gameId;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 }

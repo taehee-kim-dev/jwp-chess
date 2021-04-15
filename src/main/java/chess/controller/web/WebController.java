@@ -1,6 +1,7 @@
 package chess.controller.web;
 
 
+import chess.controller.dto.request.JoinChessRoomRequestDTO;
 import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.request.RoomCreateRequestDTO;
 import chess.controller.dto.response.BoardResponseDTO;
@@ -14,6 +15,8 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class WebController {
     private static final String ROOT = "/";
     private static final String CREATE_CHESS_ROOM = "rooms";
+    private static final String JOIN_CHESS_ROOM = "join";
     private static final String CHESS_BOARD = "rooms";
     private static final String MOVE = "move";
     private static final String DELETE = "delete";
@@ -50,11 +54,18 @@ public class WebController {
 
     @PostMapping(ROOT + CREATE_CHESS_ROOM)
     public String createChessRoomRequest(@ModelAttribute RoomCreateRequestDTO roomCreateRequestDTO, HttpServletResponse response) throws SQLException {
-        System.out.println(roomCreateRequestDTO);
         CreateChessGameResponseDTO createChessGameResponseDTO = chessWebService.createNewChessGame(roomCreateRequestDTO);
-        Cookie cookie = new Cookie("password", createChessGameResponseDTO.getPassword());
+        Cookie cookie = new Cookie("encryptedPassword", createChessGameResponseDTO.getEncryptedPassword());
         response.addCookie(cookie);
         return "redirect:" + ROOT + CHESS_BOARD + "?id=" + createChessGameResponseDTO.getGameId();
+    }
+
+    @PostMapping(ROOT + JOIN_CHESS_ROOM)
+    public ResponseEntity<String> joinChessRoomRequest(@RequestBody JoinChessRoomRequestDTO joinChessRoomRequestDTO, HttpServletResponse response) throws SQLException {
+        String encryptedPassword = chessWebService.joinGame(joinChessRoomRequestDTO);
+        Cookie cookie = new Cookie("encryptedPassword", encryptedPassword);
+        response.addCookie(cookie);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(ROOT + CHESS_BOARD)
