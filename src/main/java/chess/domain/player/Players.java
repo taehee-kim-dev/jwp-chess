@@ -5,6 +5,7 @@ import static chess.domain.player.type.TeamColor.WHITE;
 
 import chess.dao.entity.PiecePositionEntity;
 import chess.dao.player.PlayerRepository;
+import chess.domain.board.move.MoveRequest;
 import chess.domain.player.password.PasswordEncoder;
 import chess.domain.player.score.ScoreCalculator;
 import chess.domain.player.type.TeamColor;
@@ -49,5 +50,12 @@ public class Players {
         Long playerId = playerRepository.findIdByGameIdAndTeamColor(gameId, BLACK);
         playerRepository.savePlayerPassword(playerId, encryptedPassword);
         return encryptedPassword;
+    }
+
+    public void validateEncryptedPassword(Long gameId, MoveRequest moveRequest) {
+        String expectedEncryptedPassword = playerRepository.findPasswordByGameIdIdAndTeamColor(gameId, moveRequest.getCurrentTurnTeamColor());
+        if (expectedEncryptedPassword == null || !expectedEncryptedPassword.equals(moveRequest.getEncryptedPassword())) {
+            throw new IllegalArgumentException("쿠키로 전달된  encryptedPassword 값이 일치하지 않습니다.");
+        }
     }
 }

@@ -40,6 +40,7 @@ public class Board {
     public void validateRoute(Long gameId, MoveRequest moveRequest) throws SQLException {
         Map<Position, Cell> cells = playersPieces.getAllCellsByGameId(gameId);
         Cell startPositionCell = cells.get(moveRequest.getStartPosition());
+        playersPieces.validateEncryptedPassword(gameId, moveRequest);
         validateOwnPiece(startPositionCell, moveRequest.getCurrentTurnTeamColor());
         validateMoveRoute(cells, moveRequest);
     }

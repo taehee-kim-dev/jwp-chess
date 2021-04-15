@@ -9,11 +9,13 @@ public class MoveRequest {
     private final TeamColor currentTurnTeamColor;
     private final Position startPosition;
     private final Position destination;
+    private String encryptedPassword;
 
     public MoveRequest(TeamColor currentTurnTeamColor, MoveRequestDTO moveRequestDTO) {
         this.currentTurnTeamColor = currentTurnTeamColor;
         startPosition = Position.of(moveRequestDTO.getStartPosition());
         destination = Position.of(moveRequestDTO.getDestination());
+        encryptedPassword = moveRequestDTO.getEncryptedPassword();
     }
 
     public TeamColor getCurrentTurnTeamColor() {
@@ -26,6 +28,10 @@ public class MoveRequest {
 
     public Position getDestination() {
         return destination;
+    }
+
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 
     public Direction getDirection() {

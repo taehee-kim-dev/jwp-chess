@@ -5,6 +5,7 @@ public class MoveRequestDTO {
     private Long gameId;
     private String startPosition;
     private String destination;
+    private String encryptedPassword;
 
     public MoveRequestDTO() {
     }
@@ -24,6 +25,10 @@ public class MoveRequestDTO {
         this.gameId = gameId;
     }
 
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
+    }
+
     public Long getGameId() {
         return gameId;
     }
@@ -34,5 +39,9 @@ public class MoveRequestDTO {
 
     public String getDestination() {
         return destination;
+    }
+
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 }

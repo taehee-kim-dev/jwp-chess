@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class WebController {
     private static final String CHESS_BOARD_VIEW = "chess-board";
     private static final String HOME_VIEW = "index";
     private static final String RESPONSE_DTO = "responseDTO";
+    private static final String ENCRYPTED_PASSWORD = "encryptedPassword";
 
     private final ChessWebService chessWebService;
 
@@ -55,7 +57,7 @@ public class WebController {
     @PostMapping(ROOT + CREATE_CHESS_ROOM)
     public String createChessRoomRequest(@ModelAttribute RoomCreateRequestDTO roomCreateRequestDTO, HttpServletResponse response) throws SQLException {
         CreateChessGameResponseDTO createChessGameResponseDTO = chessWebService.createNewChessGame(roomCreateRequestDTO);
-        Cookie cookie = new Cookie("encryptedPassword", createChessGameResponseDTO.getEncryptedPassword());
+        Cookie cookie = new Cookie(ENCRYPTED_PASSWORD, createChessGameResponseDTO.getEncryptedPassword());
         response.addCookie(cookie);
         return "redirect:" + ROOT + CHESS_BOARD + "?id=" + createChessGameResponseDTO.getGameId();
     }
@@ -63,7 +65,7 @@ public class WebController {
     @PostMapping(ROOT + JOIN_CHESS_ROOM)
     public ResponseEntity<String> joinChessRoomRequest(@RequestBody JoinChessRoomRequestDTO joinChessRoomRequestDTO, HttpServletResponse response) throws SQLException {
         String encryptedPassword = chessWebService.joinGame(joinChessRoomRequestDTO);
-        Cookie cookie = new Cookie("encryptedPassword", encryptedPassword);
+        Cookie cookie = new Cookie(ENCRYPTED_PASSWORD, encryptedPassword);
         response.addCookie(cookie);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -89,7 +91,11 @@ public class WebController {
 
     @PostMapping(ROOT + MOVE)
     @ResponseBody
-    public MoveResponseDTO moveRequest(@RequestBody MoveRequestDTO moveRequestDTO) throws SQLException {
+    public MoveResponseDTO moveRequest(
+        @RequestBody MoveRequestDTO moveRequestDTO,
+        @CookieValue(ENCRYPTED_PASSWORD) String encryptedPassword) throws SQLException {
+
+        moveRequestDTO.setEncryptedPassword(encryptedPassword);
         return chessWebService.requestMove(moveRequestDTO);
     }
 

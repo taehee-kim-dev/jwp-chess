@@ -30,10 +30,14 @@ public class PlayerDAO implements PlayerRepository {
     @Override
     public String findPasswordByGameIdIdAndTeamColor(Long gameId, TeamColor teamColor) {
         String query = "SELECT password FROM player WHERE chess_game_id = ? AND team_color = ?";
-        return jdbcTemplate.queryForObject(
-            query,
-            String.class,
-            gameId, teamColor.getValue());
+        try {
+            return jdbcTemplate.queryForObject(
+                query,
+                String.class,
+                gameId, teamColor.getValue());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override

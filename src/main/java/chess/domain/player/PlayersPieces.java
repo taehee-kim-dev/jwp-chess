@@ -7,6 +7,7 @@ import chess.controller.dto.request.RoomCreateRequestDTO;
 import chess.dao.entity.GamePiecePositionEntity;
 import chess.dao.entity.PiecePositionEntity;
 import chess.domain.board.Cell;
+import chess.domain.board.move.MoveRequest;
 import chess.domain.board.setting.BoardSetting;
 import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceWithColorType;
@@ -107,5 +108,9 @@ public class PlayersPieces {
 
     public String savePlayerPassword(Long gameId, PlayerPasswordSaveRequestDTO playerPasswordSaveRequestDTO) throws SQLException {
         return players.savePlayerPassword(gameId, playerPasswordSaveRequestDTO);
+    }
+
+    public void validateEncryptedPassword(Long gameId, MoveRequest moveRequest) {
+        players.validateEncryptedPassword(gameId, moveRequest);
     }
 }
