@@ -131,6 +131,6 @@ class ChessGameRepositoryTest {
 
         chessGameRepository.deleteById(savedGameId);
 
-        assertThat(chessGameRepository.findById(savedGameId)).isNull();
+        assertThat(chessGameRepository.findById(savedGameId).isPresent()).isFalse();
     }
 }
