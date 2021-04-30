@@ -34,3 +34,4 @@ out/
 ### DOCKER ###
 /docker/db/
 /log/
+/mysql/
