@@ -1,4 +1,4 @@
-package chess.deploy.logback.api;
+package chess.logback.api;
 
 import static net.logstash.logback.argument.StructuredArguments.kv;
 
