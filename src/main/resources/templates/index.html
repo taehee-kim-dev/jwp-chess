@@ -37,7 +37,6 @@
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
 <script type="text/javascript">
-  const HOME = '/';
   const game_title_min_size = 5;
   const password_min_size = 5;
   const password_size_error_message = '비밀번호는 ' + password_min_size + '자 이상이어야 합니다.';
@@ -59,7 +58,7 @@
         rawBlackPlayerPassword : black_player_password
       }));
       xhr.onload = function () {
-        window.location.href = HOME + '/games/' + event.target.parentElement.id;
+        window.location.href = '/games/' + event.target.parentElement.id;
       };
     });
   }

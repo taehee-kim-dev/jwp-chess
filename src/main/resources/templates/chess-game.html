@@ -144,8 +144,6 @@
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
 <script type="text/javascript">
-  const HOME = '/';
-
   const board_status = getCookieByValue('boardStatus');
 
   const ranks = ['8', '7', '6', '5', '4', '3', '2', '1'];
@@ -239,7 +237,7 @@
         alert(move_response['errorMessage']);
         return;
       }
-      window.location.href = HOME + '/games/' + game_id;
+      window.location.href = '/games/' + game_id;
     };
   }
 
@@ -257,7 +255,7 @@
     xhr.onload = function () {
       const delete_response = xhr.response;
       if (delete_response === 'OK') {
-        window.location.href = HOME;
+        window.location.href = '/';
       }
     };
   }
