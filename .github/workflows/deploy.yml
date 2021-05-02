@@ -34,3 +34,17 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build # (7)
         shell: bash
+
+      # 1466587594/get-current-time action의 경우 기존의 Momentjs을 지원하기 때문에 동일한 포맷을 사용하면 됩니다.
+      # utcOffset: "+09:00": 해당 action의 기준이 UTC이기 때문에 한국시간이 KST를 맞추기 위해서는 +9시간이 필요하여 offset을 추가합니다.
+      - name: Get current time
+        uses: 1466587594/get-current-time@v2
+        id: current-time
+        with:
+          format: YYYY-MM-DDTHH-mm-ss
+          utcOffset: "+09:00"
+
+      # (1)의 get-current-time 에서 지정한 포맷대로 현재 시간을 노출하게 됩니다.
+      - name: Show Current Time
+        run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
+        shell: bash
