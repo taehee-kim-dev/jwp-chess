@@ -35,4 +35,4 @@ out/
 /docker/db/
 /log/
 /mysql/
-application-real-db.properties
+db-config/
