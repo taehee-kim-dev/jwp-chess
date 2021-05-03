@@ -1,4 +1,4 @@
-name: jwp-chess
+name: jwp-chess-CI
 
 # 현재 만드는 Github Action의 트리거 브랜치를 지정합니다.
 # 즉, 여기서는 version/2020-12-11브랜치가 push되면 현재 만들고 있는 Github Action이 실행됩니다.
@@ -49,31 +49,31 @@ jobs:
         run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
         shell: bash
 
-      # Gradle Build를 통해 만들어진 jar 파일을 Beanstalk에 배포하기 위한 zip 파일로 만들어줄 스크립트 입니다.
-      # 빌드가 끝나면 해당 배포 Jar의 파일명을 application.jar로 교체합니다.
-      # 매 빌드때마다 jar의 파일명이 버전과 타임스탬프로 파일명이 교체됩니다.
-      # 그래서 Beanstalk 배포시에 매번 달라질 파일명을 찾아내기 보다는 하나로 통일해서 사용하도록 변경하였습니다.
-      # application.jar 외에 3개의 파일/디렉토리 Procfile, .ebextensions, .platform 도 함께 zip에 포함시킵니다.
-      # 3개 파일/디렉토리에 대해서는 아래 2-3에서 좀 더 상세하게 설명 드리겠습니다.
-      - name: Generate deployment package
-        run:
-          mkdir -p deploy
-          cp build/libs/*.jar deploy/application.jar
-          cp Procfile deploy/Procfile
-          cp -r .ebextensions deploy/.ebextensions
-          cp -r .platform deploy/.platform
-          cd deploy && zip -r deploy.zip .
-
-      # Beanstalk 플러그인을 사용하는 코드입니다.
-      # 미리 생성해둔 IAM 인증키를 사용합니다.
-      # 이전 시간 에 만들어준 현재 시간 플러그인을 통해 Beanstalk이 배포될때마다 유니크한 버저닝이 될 수 있도록 github-action-${{steps.current-time.outputs.formattedTime}} 코드를 추가하였습니다.
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v16
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: MyApplicationName
-          environment_name: MyApplication-Environment
-          version_label: github-action-${{steps.current-time.outputs.formattedTime}}
-          region: ap-northeast-2
-          deployment_package: deploy/deploy.zip
+#      # Gradle Build를 통해 만들어진 jar 파일을 Beanstalk에 배포하기 위한 zip 파일로 만들어줄 스크립트 입니다.
+#      # 빌드가 끝나면 해당 배포 Jar의 파일명을 application.jar로 교체합니다.
+#      # 매 빌드때마다 jar의 파일명이 버전과 타임스탬프로 파일명이 교체됩니다.
+#      # 그래서 Beanstalk 배포시에 매번 달라질 파일명을 찾아내기 보다는 하나로 통일해서 사용하도록 변경하였습니다.
+#      # application.jar 외에 3개의 파일/디렉토리 Procfile, .ebextensions, .platform 도 함께 zip에 포함시킵니다.
+#      # 3개 파일/디렉토리에 대해서는 아래 2-3에서 좀 더 상세하게 설명 드리겠습니다.
+#      - name: Generate deployment package
+#        run:
+#          mkdir -p deploy
+#          cp build/libs/*.jar deploy/application.jar
+#          cp Procfile deploy/Procfile
+#          cp -r .ebextensions deploy/.ebextensions
+#          cp -r .platform deploy/.platform
+#          cd deploy && zip -r deploy.zip .
+#
+#      # Beanstalk 플러그인을 사용하는 코드입니다.
+#      # 미리 생성해둔 IAM 인증키를 사용합니다.
+#      # 이전 시간 에 만들어준 현재 시간 플러그인을 통해 Beanstalk이 배포될때마다 유니크한 버저닝이 될 수 있도록 github-action-${{steps.current-time.outputs.formattedTime}} 코드를 추가하였습니다.
+#      - name: Deploy to EB
+#        uses: einaregilsson/beanstalk-deploy@v16
+#        with:
+#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          application_name: MyApplicationName
+#          environment_name: MyApplication-Environment
+#          version_label: github-action-${{steps.current-time.outputs.formattedTime}}
+#          region: ap-northeast-2
+#          deployment_package: deploy/deploy.zip
