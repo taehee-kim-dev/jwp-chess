@@ -60,6 +60,7 @@ jobs:
           mv before-deploy/before-deploy.zip deploy/jwp-chess.zip
 
   docker:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
