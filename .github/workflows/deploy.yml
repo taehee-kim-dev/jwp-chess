@@ -52,12 +52,12 @@ jobs:
       - name: Zip files to deploy
         run: |
           mkdir -p before-deploy
-          cp /scripts/*.sh /before-deploy/
-          cp /appspec.yml /before-deploy/
-          cp /build/libs/*.jar before-deploy/
-          cd /before-deploy && zip -r before-deploy.zip *
-          cd / && mkdir -p deploy
-          mv /before-deploy/before-deploy.zip /deploy/jwp-chess.zip
+          cp ~/scripts/*.sh ~/before-deploy/
+          cp ~/appspec.yml ~/before-deploy/
+          cp ~/build/libs/*.jar ~/before-deploy/
+          cd ~/before-deploy && zip -r before-deploy.zip *
+          cd ~/ && mkdir -p deploy
+          mv ~/before-deploy/before-deploy.zip ~/deploy/jwp-chess.zip
 
 #      # Gradle Build를 통해 만들어진 jar 파일을 Beanstalk에 배포하기 위한 zip 파일로 만들어줄 스크립트 입니다.
 #      # 빌드가 끝나면 해당 배포 Jar의 파일명을 application.jar로 교체합니다.
