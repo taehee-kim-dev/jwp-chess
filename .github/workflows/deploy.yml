@@ -53,6 +53,7 @@ jobs:
         run: |
           mkdir -p before-deploy
           ls -al
+          pwd
           cp ~/scripts/*.sh ~/before-deploy/
           cp ~/appspec.yml ~/before-deploy/
           cp ~/build/libs/*.jar ~/before-deploy/
