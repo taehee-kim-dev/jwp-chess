@@ -67,8 +67,8 @@ jobs:
       # Beanstalk 플러그인을 사용하는 코드입니다.
       # 미리 생성해둔 IAM 인증키를 사용합니다.
       # 이전 시간 에 만들어준 현재 시간 플러그인을 통해 Beanstalk이 배포될때마다 유니크한 버저닝이 될 수 있도록 github-action-${{steps.current-time.outputs.formattedTime}} 코드를 추가하였습니다.
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v16
+      - name: Beanstalk Deploy
+        uses: einaregilsson/beanstalk-deploy@v17
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
