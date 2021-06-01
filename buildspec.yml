@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+  post_build:
+    commands:
+      - chmod +x ./gradlew
+      - ./gradlew clean build
+      - build/libs/*.jar deploy/application.jar
+artifacts:
+  files:
+    - application.jar
+    - .ebextensions/**/*
+    - Procfile
