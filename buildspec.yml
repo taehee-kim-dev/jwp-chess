@@ -8,7 +8,7 @@ phases:
     commands:
       - chmod +x ./gradlew
       - ./gradlew clean build
-      - build/libs/*.jar deploy/application.jar
+      - cp build/libs/*.jar application.jar
 artifacts:
   files:
     - application.jar
