@@ -49,41 +49,41 @@ jobs:
         run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
         shell: bash
 
-      - name: Zip files to deploy
-        run: |
-          mkdir -p before-deploy
-          cp scripts/*.sh before-deploy/
-          cp appspec.yml before-deploy/
-          cp build/libs/*.jar before-deploy/
-          cd before-deploy && zip -r before-deploy.zip *
-          cd ../ && mkdir -p deploy
-          mv before-deploy/before-deploy.zip deploy/jwp-chess.zip
-
-  docker:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/jwp-chess:${{steps.current-time.outputs.formattedTime}}
-
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+#      - name: Zip files to deploy
+#        run: |
+#          mkdir -p before-deploy
+#          cp scripts/*.sh before-deploy/
+#          cp appspec.yml before-deploy/
+#          cp build/libs/*.jar before-deploy/
+#          cd before-deploy && zip -r before-deploy.zip *
+#          cd ../ && mkdir -p deploy
+#          mv before-deploy/before-deploy.zip deploy/jwp-chess.zip
+#
+#  docker:
+#    needs: build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Set up QEMU
+#        uses: docker/setup-qemu-action@v1
+#
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v1
+#
+#      - name: Login to DockerHub
+#        uses: docker/login-action@v1
+#        with:
+#          username: ${{ secrets.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#
+#      - name: Build and push
+#        id: docker_build
+#        uses: docker/build-push-action@v2
+#        with:
+#          push: true
+#          tags: ${{ secrets.DOCKERHUB_USERNAME }}/jwp-chess:${{steps.current-time.outputs.formattedTime}}
+#
+#      - name: Image digest
+#        run: echo ${{ steps.docker_build.outputs.digest }}
 
 #      # Gradle Build를 통해 만들어진 jar 파일을 Beanstalk에 배포하기 위한 zip 파일로 만들어줄 스크립트 입니다.
 #      # 빌드가 끝나면 해당 배포 Jar의 파일명을 application.jar로 교체합니다.
